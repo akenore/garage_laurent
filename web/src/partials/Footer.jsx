@@ -1,36 +1,27 @@
 // eslint-disable-next-line no-unused-vars
-import React, {useState} from 'react';
-import partenaire from '../assets/img/partenaire.webp';
-import side_contact from '../assets/img/contact-side.webp';
+import React, {useRef, useState} from 'react';
+import emailjs from 'emailjs-com';
+import {Button, Alert} from 'flowbite-react';
+import partenaire from '../assets/img/partenaire.webp'
+import side_contact from '../assets/img/contact-side.webp'
+const Footer = () => {
 
-function Footer() {
-     const [formData, setFormData] = useState({name: '', phone: '', email: '', message: ''});
-
-     const handleChange = (e) => {
-          const {name, value} = e.target;
-          setFormData({
-               ...formData,
-               [name]: value
+     const form = useRef();
+     const [isSent, setIsSent] = useState(false);
+     const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+     const sendEmail = (e) => {
+          e.preventDefault();
+          emailjs.sendForm('service_zon9xji', 'template_asvg0ea', form.current, 'iK2i3ECRI8ftdK3vO').then((result) => {
+               console.log(result.text);
+               form.current.reset();
+               setIsSent(true);
+               setShowSuccessMessage(true);
+          }, (error) => {
+               console.log(error.text);
           });
      };
-
-     const handleSubmit = async (e) => {
-          e.preventDefault();
-
-          try {
-               const response = await fetch('../sendEmail', {
-                    method: 'POST',
-                    body: JSON.stringify(formData)
-               });
-
-               if (response.status === 200) {
-                    alert('Email sent successfully');
-               } else {
-                    alert('Email could not be sent. Please try again later.');
-               }
-          } catch (error) {
-               console.error(error);
-          }
+     const dismissSuccessMessage = () => {
+          setShowSuccessMessage(false);
      };
 
      return (<>
@@ -51,55 +42,50 @@ function Footer() {
                </div>
           </section>
           <section id='contact' className="bg-yallow">
-               <div className="flex justify-center md:bg-footer bg-contain bg-no-repeat bg-bottom">
-                    <form onSubmit={handleSubmit}>
+               <div className="flex justify-center md:bg-footer bg-contain bg-no-repeat bg-bottom"> {/* {
+                    successMessage && (<p className="text-green-500"> {successMessage}</p>)
+               } */}
+                    <form ref={form}
+                         onSubmit={sendEmail}>
                          <div className="flex">
                               <div className="hidden md:block">
                                    <img className='w-96'
                                         src={side_contact}
                                         alt="contact photo"/>
                               </div>
-                              <div className='p-10 bg-white  md:rounded-r-xl'>
+                              <div className='p-10 bg-white md:rounded-r-xl'>
                                    <h1 className="font-bold text-2xl md:text-4xl uppercase text-red2 mb-10">Contactez-nous</h1>
                                    <div className='mb-6'>
-                                        <input className="bg-gray-50 border border-gray-300 text-gray-900 text-md rounded-lg focus:ring-red2 focus:border-red2 block w-full p-5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-red2 dark:focus:border-red2" type="text" name="name"
-                                             value={
-                                                  formData.name
-                                             }
-                                             onChange={handleChange}
-                                             placeholder="Votre nom"
-                                             required/>
+                                        <input type="text" name="name" className="bg-gray-50 border border-gray-300 text-gray-900 text-md rounded-lg focus:ring-red2 focus:border-red2 block w-full p-5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-red2 dark:focus:border-red2" placeholder="Votre nom" required/>
                                    </div>
                                    <div className='mb-6'>
-                                        <input className="bg-gray-50 border border-gray-300 text-gray-900 text-md rounded-lg focus:ring-red2 focus:border-red2 block w-full p-5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-red2 dark:focus:border-red2" type="text" name="phone"
-                                             value={
-                                                  formData.phone
-                                             }
-                                             onChange={handleChange}
-                                             placeholder="Téléphone"
-                                             required/>
+                                        <input type="text" name="phone" className="bg-gray-50 border border-gray-300 text-gray-900 text-md rounded-lg focus:ring-red2 focus:border-red2 block w-full p-5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-red2 dark:focus:border-red2" placeholder="Téléphone" required/>
                                    </div>
                                    <div className='mb-6'>
-                                        <input className="bg-gray-50 border border-gray-300 text-gray-900 text-md rounded-lg focus:ring-red2 focus:border-red2 block w-full p-5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-red2 dark:focus:border-red2" type="email" name="email"
-                                             value={
-                                                  formData.email
-                                             }
-                                             onChange={handleChange}
-                                             placeholder="Adresse e-mail"
-                                             required/>
+                                        <input type="email" name="email" className="bg-gray-50 border border-gray-300 text-gray-900 text-md rounded-lg focus:ring-red2 focus:border-red2 block w-full p-5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-red2 dark:focus:border-red2" placeholder="Adresse e-mail" required/>
                                    </div>
                                    <div className="mb-6">
-                                        <textarea className="block p-5 w-full text-md text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-red2 focus:border-red2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-red2 dark:focus:border-red2" name="message"
+                                        <textarea name="message"
                                              rows={6}
-                                             value={
-                                                  formData.message
-                                             }
-                                             onChange={handleChange}
+                                             className="block p-5 w-full text-md text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-red2 focus:border-red2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-red2 dark:focus:border-red2"
                                              placeholder="Votre message..."
+                                             defaultValue={''}
                                              required/>
                                    </div>
-                                   <button type="submit" className="focus:outline-none text-black bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Envoyer</button>
-                              </div>
+                                   {
+                                   isSent && showSuccessMessage ? (<div className="text-green-500 font-bold">
+                                        <Alert color="success"
+                                             onDismiss={dismissSuccessMessage}>
+                                             <span>
+                                                  <p>
+                                                       Message envoyé avec succès!
+                                                  </p>
+                                             </span>
+                                        </Alert>
+                                   </div>) : (<Button type="submit" gradientMonochrome="failure" className="bg-red2 w-full">
+                                        Envoyer
+                                   </Button>)
+                              } </div>
                          </div>
                     </form>
                </div>
@@ -145,7 +131,7 @@ function Footer() {
                     </div>
                </div>
           </section>
-     </>)
-}
+     </>);
+};
 
-export default Footer
+export default Footer;

@@ -1,14 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="598" height="125" viewBox="0 0 598 125">
-  <defs>
-    <filter id="Line_3" x="0" y="0" width="598" height="125" filterUnits="userSpaceOnUse">
-      <feOffset dx="10" dy="10" input="SourceAlpha"/>
-      <feGaussianBlur stdDeviation="20" result="blur"/>
-      <feFlood flood-opacity="0.161"/>
-      <feComposite operator="in" in2="blur"/>
-      <feComposite in="SourceGraphic"/>
-    </filter>
-  </defs>
-  <g transform="matrix(1, 0, 0, 1, 0, 0)" filter="url(#Line_3)">
-    <line id="Line_3-2" data-name="Line 3" x2="473" transform="translate(52.5 52.5)" fill="none" stroke="#fbe011" stroke-linecap="round" stroke-width="5"/>
-  </g>
-</svg>
+<svg height="125" viewBox="0 0 598 125" width="598" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><filter id="a" filterUnits="userSpaceOnUse" height="125" width="598" x="0" y="0"><feOffset dx="10" dy="10"/><feGaussianBlur result="blur" stdDeviation="20"/><feFlood flood-opacity=".161"/><feComposite in2="blur" operator="in"/><feComposite in="SourceGraphic"/></filter><g filter="url(#a)"><path d="m0 0h473" fill="none" stroke="#fbe011" stroke-linecap="round" stroke-width="5" transform="translate(52.5 52.5)"/></g></svg>
