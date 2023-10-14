@@ -29,11 +29,12 @@ export default {
                     'segoe': ['Segoe UI', 'sans-serif']
                },
                backgroundImage: {
-                    'hero-web': "url('./src/assets/img/hero.webp')",
-                    'hero-mobile': "url('./src/assets/img/hero-mobile.webp')",
-                    'footer' : "url('./src/assets/img/footer-bg.webp')"
+                    'hero-web': "url('/src/assets/img/hero.webp')",
+                    'hero-mobile': "url('/src/assets/img/hero-mobile.webp')",
+                    'footer' : "url('/src/assets/img/footer-bg.webp')"
                }
           }
      },
+     // eslint-disable-next-line no-undef
      plugins: [require('flowbite/plugin'),]
 }
